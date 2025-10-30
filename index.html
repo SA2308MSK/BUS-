@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>BusBuddy — Smart BMTC Companion</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+  <div id="app">
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="brand">🚌 BusBuddy</div>
+      <button id="open-search" class="icon-btn">🔍</button>
+    </header>
+
+    <!-- MAIN PAGES -->
+    <main id="main">
+      <!-- Routes Page -->
+      <section id="routes-page" class="page">
+        <div class="search-row">
+          <input id="routeSearch" placeholder="Search by route number or stop (e.g., 500D or Kempegowda)" />
+          <button class="btn" id="clearSearch">Clear</button>
+        </div>
+
+        <div id="routeList" class="list"></div>
+      </section>
+
+      <!-- Map Page -->
+      <section id="map-page" class="page hidden">
+        <div id="map" aria-label="Live bus map"></div>
+        <div class="map-overlay">
+          <select id="mapRouteFilter"><option value="all">All routes</option></select>
+          <button class="btn small" id="centerMyLocation">📍 My location</button>
+        </div>
+      </section>
+
+      <!-- Tickets Page -->
+      <section id="tickets-page" class="page hidden">
+        <div class="card">
+          <h3>Generate Ticket (Single)</h3>
+          <input id="ticket_name" placeholder="Your name" />
+          <input id="ticket_route" placeholder="Route (ex: 500D)" />
+          <button class="btn" id="genTicketBtn">Generate Ticket & QR</button>
+          <div id="ticketQR" class="center"></div>
+          <p id="ticketInfo" class="muted"></p>
+        </div>
+
+        <div class="card">
+          <h3>Passes</h3>
+          <div class="btn-row">
+            <button class="btn" onclick="generatePass('day')">Day Pass</button>
+            <button class="btn" onclick="generatePass('week')">Weekly Pass</button>
+            <button class="btn" onclick="generatePass('month')">Monthly Pass</button>
+          </div>
+          <div id="passInfo" class="muted"></div>
+        </div>
+
+        <div class="card">
+          <h3>Your Tickets & Passes (Saved)</h3>
+          <div id="savedList" class="list small"></div>
+        </div>
+      </section>
+
+      <!-- Analytics Page -->
+      <section id="analytics-page" class="page hidden">
+        <div class="card">
+          <h3>Commuter Analytics</h3>
+          <div class="stat-row">
+            <div><strong id="statRides">0</strong><div class="muted">Rides</div></div>
+            <div><strong id="statMoney">₹0</strong><div class="muted">Saved</div></div>
+            <div><strong id="statCO2">0 kg</strong><div class="muted">CO₂ saved</div></div>
+          </div>
+          <p class="muted small">Data stored locally on this device (demo).</p>
+        </div>
+
+        <div class="card">
+          <h3>Nearby Stops</h3>
+          <button class="btn" onclick="findNearByStops()">Find Bus Stops Near Me</button>
+          <div id="nearby" class="muted small"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Navigation (app-like) -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-target="routes-page">Routes</button>
+      <button class="nav-btn" data-target="map-page">Map</button>
+      <button class="nav-btn" data-target="tickets-page">Tickets</button>
+      <button class="nav-btn" data-target="analytics-page">Analytics</button>
+    </nav>
+  </div>
+
+  <!-- JS libraries -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <!-- App logic -->
+  <script src="script.js"></script>
+</body>
+</html>
